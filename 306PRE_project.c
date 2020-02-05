@@ -10,10 +10,14 @@ void readcvs(char field[]){
 
 void f(){
 		///TODO: Display the number of fields in the first record of file
+                ///This will be number of columns
+                ///Should be able to use sizeof(readcvs) if returns the matrix
 }
 
 void r(){
 		///TODO: Display the number of data records in file
+                ///This will be reading first row
+                ///Should be able to use sizeof(readcvs[0])
 }
 
 void h(){

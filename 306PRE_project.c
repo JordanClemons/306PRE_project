@@ -1,8 +1,52 @@
 # include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char*argv[]){
-		///TODO: READ COMMAND ARGUEMENTS AND CALL BELOW FUNCTIONS 
+	
+	if(argc < 2){ 		//IF NOT ENOUGH ARGUEMENTS PROVIDED
+		printf("No argument provided");
+		exit(1);
+	}
+		
+	readcvs(argv[argc-1]);	//READ CSV FILE BEFORE ANYTHING
+		
+	for(int x = 1; x < argc; x++){
+		if (strncmp("-f", argv[x], 2) == 0){
+			f();
+		}
+		else if (strncmp("-r", argv[x], 2) == 0){
+			r();
+		}
+		
+		else if (strncmp("-h", argv[x], 2) == 0){
+			h();
+		}
+		
+		else if (strncmp("-max", argv[x], 4) == 0){
+			x++;
+			max(argv[x]);
+		}
+		
+		else if (strncmp("-min", argv[x], 4) == 0){
+			x++;
+			min(argv[x]);
+		}
+		
+		else if (strncmp("-mean", argv[x], 5) == 0){
+			x++;
+			mean(argv[x]);
+		}
+	
+		else if (strncmp("-records", argv[x], 8) == 0){
+			x++;
+			records(argv[x]);
+		}
+		
+		exit(0);
+		}
 }
+
+
 
 void readcvs(char field[]){
 		///TODO: READ AND PARSE CSV FILE

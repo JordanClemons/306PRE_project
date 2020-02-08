@@ -1,14 +1,32 @@
-# include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+void readCSV(FILE* csvFile);
+void f();
+void r();
+void h();
+void max(char field[]);
+void min(char field[]);
+void mean(char field[]);
+void records(char field[]);
 
 int main(int argc, char*argv[]){
 	
 	if(argc < 2){ 		//IF NOT ENOUGH ARGUEMENTS PROVIDED
-		printf("No argument provided");
+		printf("No argument provided\n");
 		exit(1);
 	}
-		
-	readcvs(argv[argc-1]);	//READ CSV FILE BEFORE ANYTHING
+	
+	FILE * csvFile;
+	char*** csvContents;
+	csvFile = fopen(argv[argc-1], "r");
+	if (csvFile == NULL){
+		printf("Error Opening File\n");
+		return 1;
+	}else{
+		readcvs(csvFile);	//READ CSV FILE BEFORE ANYTHING
+	}
 		
 	for(int x = 1; x < argc; x++){
 		if (strncmp("-f", argv[x], 2) == 0){
@@ -41,15 +59,46 @@ int main(int argc, char*argv[]){
 			x++;
 			records(argv[x]);
 		}
-		
-		exit(0);
-		}
+	}
+
+	exit(0);
 }
 
 
 
-void readcvs(char field[]){
-		///TODO: READ AND PARSE CSV FILE
+void readCSV(FILE* csvFile){
+	char*** csvInfo = malloc(sizeof(***csvInfo));
+	int rows = 0;
+	char* line = malloc(sizeof(*line));
+	fscanf(csvFile, "%s", line);
+	while (line[0] != '\0'){
+		csvInfo[rows] = malloc(sizeof(**csvInfo));
+		int cols = 0;
+		csvInfo[rows][cols] = malloc(sizeof(*csvInfo));
+		int pos = 0;
+		int isString = 1;
+		for (int i = 0; i <= strlen(line); i++){
+			if (line[i] == '"'){
+				// TODO: ignore ',' in csv reading
+			}
+
+			if (line[i] == ',' || line[i] == '\0'){
+				csvInfo[rows][cols][pos] = '\0';
+				printf("%s\n", csvInfo[rows][cols]);
+				pos = 0;
+				cols +=1;
+				csvInfo[rows][cols] = malloc(sizeof(*csvInfo));
+			}else{
+				csvInfo[rows][cols][pos] = line[i];
+				pos +=1;
+			}
+		}
+
+		rows+=1;
+		fscanf(csvFile, "%s", line);
+	}
+
+	printf("%s\n", csvInfo[1][2]);
 }
 
 void f(){

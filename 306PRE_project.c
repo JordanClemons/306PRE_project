@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void readCSV(FILE* csvFile);
+char*** readCSV(FILE* csvFile);
 void f();
 void r();
 void h();
@@ -25,7 +25,7 @@ int main(int argc, char*argv[]){
 		printf("Error Opening File\n");
 		return 1;
 	}else{
-		readcvs(csvFile);	//READ CSV FILE BEFORE ANYTHING
+		csvContents = readcvs(csvFile);	//READ CSV FILE BEFORE ANYTHING
 	}
 		
 	for(int x = 1; x < argc; x++){
@@ -66,39 +66,46 @@ int main(int argc, char*argv[]){
 
 
 
-void readCSV(FILE* csvFile){
+char*** readCSV(FILE* csvFile){
+	// allocate 3-d array
 	char*** csvInfo = malloc(sizeof(***csvInfo));
 	int rows = 0;
-	char* line = malloc(sizeof(*line));
-	fscanf(csvFile, "%s", line);
-	while (line[0] != '\0'){
+	char line[1024];
+	int pos = 0; // marks position of char array for values
+	while (fgets(line, 1024, csvFile) != NULL){
+		// allocate space for columns
 		csvInfo[rows] = malloc(sizeof(**csvInfo));
 		int cols = 0;
+		// allocate space for values
 		csvInfo[rows][cols] = malloc(sizeof(*csvInfo));
-		int pos = 0;
-		int isString = 1;
+		// isString is 0 when no quotes and 1 when quotes are read
+		int isString = 0;
 		for (int i = 0; i <= strlen(line); i++){
-			if (line[i] == '"'){
-				// TODO: ignore ',' in csv reading
+			if (line[i] == '\"'){
+					isString = 1 - isString;
+					i +=1;
 			}
 
-			if (line[i] == ',' || line[i] == '\0'){
-				csvInfo[rows][cols][pos] = '\0';
-				printf("%s\n", csvInfo[rows][cols]);
-				pos = 0;
-				cols +=1;
-				csvInfo[rows][cols] = malloc(sizeof(*csvInfo));
-			}else{
+			if (isString == 1){
 				csvInfo[rows][cols][pos] = line[i];
 				pos +=1;
+			}else if (isString == 0){
+				if (line[i] == ',' || line[i] == '\0'){
+					csvInfo[rows][cols][pos] = '\0';
+					pos = 0;
+					cols +=1;
+					csvInfo[rows][cols] = malloc(sizeof(*csvInfo));
+				}else{
+					csvInfo[rows][cols][pos] = line[i];
+					pos +=1;
+				}
 			}
 		}
-
+		
 		rows+=1;
-		fscanf(csvFile, "%s", line);
 	}
 
-	printf("%s\n", csvInfo[1][2]);
+	return csvInfo;
 }
 
 void f(){

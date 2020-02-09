@@ -1,4 +1,4 @@
 DATE, UBIT,  DURATION, ACTIVITY & TOOL DESCRIPTION
 2020/02/03, arjank, 5 min, created this file and commited to my branch - used vscode
 2020/02/08, arjank, 3hr, worked on reader but it doesnt works - used vscode
-2020/02/09, arjank,
+2020/02/09, arjank, 2h3, worked on reader using vs code: no longer runs infintely, but now has segmentation fault

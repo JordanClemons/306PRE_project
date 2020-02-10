@@ -144,7 +144,7 @@ int MaxValue(int index, char*** csvInfo){
 		}
 
 		double max = DBL_MIN;
-		for (int i = 1; i < sizeof(csvInfo[0]); i++){
+		for (int i = 1; i < sizeof(csvInfo); i++){
 			if (!isdigit(csvInfo[i][index][0])){
 				printf("Invalid field for '-max' function\n");
 				return 1;

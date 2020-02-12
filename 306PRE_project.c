@@ -86,7 +86,7 @@ int main(int argc, char*argv[]){
 
 char*** ReadCSV(FILE* csvFile){
 	// allocate 3-d array
-	char*** csvInfo = malloc(4096);
+	char*** csvInfo = malloc(16384);
 	int rows = 0;
 	char line[4096];
 	int pos = 0; // marks position of char array for values
@@ -114,7 +114,7 @@ char*** ReadCSV(FILE* csvFile){
 					cols +=1;
 					csvInfo[rows][cols] = malloc(4096);
 				}else if(line[i] == '\0'){
-					csvInfo[rows][cols][pos] = '\0';
+					csvInfo[rows][cols][pos - 1] = '\0'; // removes \n from end of csv file
 					pos = 0;
 				}else{
 					csvInfo[rows][cols][pos] = line[i];
@@ -124,7 +124,7 @@ char*** ReadCSV(FILE* csvFile){
 		}
 		
 		rows+=1;
-                ROWCOUNT+=1;
+        ROWCOUNT+=1;
                 
 	}
         
@@ -213,6 +213,6 @@ int GetIndex(char field[], char*** csvInfo){
 		}
 	}
 
-	printf("Invalid field name: %s", field);
+	printf("Invalid field name: %s\n", field);
 	return -1;
 }

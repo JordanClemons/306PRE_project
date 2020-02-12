@@ -5,8 +5,8 @@
 #include <float.h>
 
 char*** ReadCSV(FILE* csvFile);
-void f();
-void r();
+void f(char*** csvInfo);
+void r(char*** csvInfo);
 void h();
 int MaxValue(int index, char*** csvInfo);
 void MinValue(char field[]);
@@ -34,10 +34,10 @@ int main(int argc, char*argv[]){
 	int isHeader = 0; // for -h, 0 == false, 1 == true
 	for(int x = 1; x < argc; x++){
 		if (strncmp("-f", argv[x], 2) == 0){
-			f();
+			f(csvContents);
 		}
 		else if (strncmp("-r", argv[x], 2) == 0){
-			r();
+			r(csvContents);
 		}
 		
 		else if (strncmp("-h", argv[x], 2) == 0){
@@ -127,13 +127,29 @@ char*** ReadCSV(FILE* csvFile){
 	return csvInfo;
 }
 
-void f(){
+void f(char*** csvInfo){
+    printf("%lu\n", sizeof((csvInfo)));
 		///TODO: Display the number of fields in the first record of file
                 ///This will be number of columns
                 ///Should be able to use sizeof(readcvs) if returns the matrix
 }
 
-void r(){
+void r(char*** csvInfo){
+    long row = 0;
+    char str[256] = " ";
+    for (int i = 0; i < 4096; i++){
+        //printf("Info in row:%s\n", csvInfo[i][0]);
+        //if (strcmp((csvInfo[i][0]), str) == 0){
+        //    break;
+        //}
+        if (csvInfo[i][0] == NULL)
+            break;
+        
+        row++;
+        printf("Row count:%lu\n", row);
+    }
+
+    
 		///TODO: Display the number of data records in file
                 ///This will be reading first row
                 ///Should be able to use sizeof(readcvs[0])

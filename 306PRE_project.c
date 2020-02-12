@@ -11,7 +11,7 @@ void h();
 int MaxValue(int index, char*** csvInfo);
 void MinValue(char field[]);
 void mean(char field[]);
-void records(char field[]);
+int records(int index, char feild[], char*** csvInfo);
 int GetIndex(char field[], char*** csvInfo);
 
 int main(int argc, char*argv[]){
@@ -67,7 +67,13 @@ int main(int argc, char*argv[]){
 	
 		else if (strncmp("-records", argv[x], 8) == 0){
 			x++;
-			records(argv[x]);
+			if (isHeader == 1){
+			  if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
+					return 1;
+				}
+			}else{
+				printf("Must use -h to use -records\n");
+			}
 		}
 	}
 
@@ -168,10 +174,23 @@ void mean(char field[]){
 		///TODO: Display the arithmetic mean (average) value in the indicated field of the data records
 }
 
-void records(char field[]){
+int records(int index, char field[], char*** csvInfo){
 		///TODO: Display the records from file containing value in the the indicated field
                 ///Iterate through value until match
                 ///Display that row - iterate through and display all fields
+                for (int i = 0; i < sizeof(csvInfo); i++){
+		        if(index == csvInfo[0][i]){
+		                 for (int j = 1; j < sizeof(csvInfo); j++){
+		                         if(field == csvInfo[j][i]){
+					        for(int k = 0; k < sizeof(csvInfo); k++){
+			                               printf("%s, ", csvInfo[j][k]);
+		                         	}
+		                         }
+		                 }
+		       }
+                }
+
+		return 0;
 }
 
 // Gets index from field

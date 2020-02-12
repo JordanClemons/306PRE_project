@@ -124,7 +124,7 @@ char*** ReadCSV(FILE* csvFile){
 		}
 		
 		rows+=1;
-        ROWCOUNT+=1;
+                ROWCOUNT+=1;
                 
 	}
         
@@ -133,18 +133,10 @@ char*** ReadCSV(FILE* csvFile){
 
 void f(char*** csvInfo){
     printf("%lu\n", sizeof((csvInfo)));
-		///TODO: Display the number of fields in the first record of file
-                ///This will be number of columns
-                ///Should be able to use sizeof(readcvs) if returns the matrix
 }
 
 void r(char*** csvInfo){
-    printf("Row count:%i\n", ROWCOUNT);
-
-    
-		///TODO: Display the number of data records in file
-                ///This will be reading first row
-                ///Should be able to use sizeof(readcvs[0])
+    printf("%i\n", ROWCOUNT);
 }
 
 void h(){

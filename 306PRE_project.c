@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include <float.h>
 
+static int ROWCOUNT;
+
 char*** ReadCSV(FILE* csvFile);
 void f(char*** csvInfo);
 void r(char*** csvInfo);
@@ -122,8 +124,10 @@ char*** ReadCSV(FILE* csvFile){
 		}
 		
 		rows+=1;
+                ROWCOUNT+=1;
+                
 	}
-
+        
 	return csvInfo;
 }
 
@@ -135,19 +139,7 @@ void f(char*** csvInfo){
 }
 
 void r(char*** csvInfo){
-    long row = 0;
-    char str[256] = " ";
-    for (int i = 0; i < 4096; i++){
-        //printf("Info in row:%s\n", csvInfo[i][0]);
-        //if (strcmp((csvInfo[i][0]), str) == 0){
-        //    break;
-        //}
-        if (csvInfo[i][0] == NULL)
-            break;
-        
-        row++;
-        printf("Row count:%lu\n", row);
-    }
+    printf("Row count:%i\n", ROWCOUNT);
 
     
 		///TODO: Display the number of data records in file

@@ -40,6 +40,19 @@ int main(int argc, char*argv[]){
 		if (strncmp("-f", argv[x], 2) == 0){
 			f(csvContents);
 		}
+
+        else if (strncmp("-records", argv[x], 8) == 0){
+            x++;
+            if (isHeader == 1){
+                if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
+                    Deallocate(csvContents);
+                    return 1;
+                }
+            }else{
+                printf("Must use -h to use -records\n");
+            }
+        }
+
 		else if (strncmp("-r", argv[x], 2) == 0){
 			r(csvContents);
 		}
@@ -72,17 +85,7 @@ int main(int argc, char*argv[]){
 			}
 		}
 	
-		else if (strncmp("-records", argv[x], 8) == 0){
-			x++;
-			if (isHeader == 1){
-			  if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
-					Deallocate(csvContents);
-					return 1;
-				}
-			}else{
-				printf("Must use -h to use -records\n");
-			}
-		}
+
 	}
 
 	Deallocate(csvContents);

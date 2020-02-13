@@ -11,8 +11,8 @@ void f(char*** csvInfo);
 void r(char*** csvInfo);
 void h(char*** csvInfo);
 int MaxValue(int index, char*** csvInfo);
-void MinValue(char field[]);
-void mean(char field[]);
+int MinValue(int index, char*** csvInfo);
+int mean(int index, char*** csvInfo);
 int records(int index, char feild[], char*** csvInfo);
 int GetIndex(char field[], char*** csvInfo);
 void Deallocate(char*** csvInfo);
@@ -58,12 +58,18 @@ int main(int argc, char*argv[]){
 		
 		else if (strncmp("-min", argv[x], 4) == 0){
 			x++;
-			MinValue(argv[x]);
+			if (MinValue(GetIndex(argv[x], csvContents), csvContents) == 1){
+				Deallocate(csvContents);
+				exit(1);
+			}
 		}
 		
 		else if (strncmp("-mean", argv[x], 5) == 0){
 			x++;
-			mean(argv[x]);
+			if (mean(GetIndex(argv[x], csvContents), csvContents) == 1){
+				Deallocate(csvContents);
+				exit(1);
+			}
 		}
 	
 		else if (strncmp("-records", argv[x], 8) == 0){
@@ -168,12 +174,48 @@ int MaxValue(int index, char*** csvInfo){
 		return 0;
 }
 
-void MinValue(char field[]){
-		///TODO: Display the minimum value in the indicated field of the data records
+int MinValue(int index, char*** csvInfo){
+		// Display the minimum value in the indicated field of the data records
+		if (index == -1){
+			return 1;
+		}
+
+		double min = DBL_MAX;
+		for (int i = 1; i < ROWCOUNT; i++){
+			if (!isdigit(csvInfo[i][index][0])){
+				printf("Invalid field for '-min' function\n");
+				return 1;
+			}
+
+			double temp = atof(csvInfo[i][index]);
+			if (temp < min){
+				min = temp;
+			}
+		}
+
+		printf("Min: %f\n", min);
+		return 0;
 }
 
-void mean(char field[]){
-		///TODO: Display the arithmetic mean (average) value in the indicated field of the data records
+int mean(int index, char*** csvInfo){
+		// Display the mean value in the indicated field of the data records
+		if (index == -1){
+			return 1;
+		}
+
+		double sum = 0;
+		for (int i = 1; i < ROWCOUNT; i++){
+			if (!isdigit(csvInfo[i][index][0])){
+				printf("Invalid field for '-min' function\n");
+				return 1;
+			}
+
+			double temp = atof(csvInfo[i][index]);
+			sum = sum + temp;
+		}
+		double mean = sum / ROWCOUNT;
+		printf("Mean: %f\n", mean);
+		return 0;
 }
 
 int records(int index, char field[], char*** csvInfo){

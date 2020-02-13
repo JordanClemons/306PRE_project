@@ -4,3 +4,4 @@ DATE, UBIT,  DURATION, ACTIVITY & TOOL DESCRIPTION
 2020/02/09, arjank, 2hr, worked on reader using vs code: no longer runs infintely, but now has segmentation fault
 2020/02/10, arjank, 2hr, fixed segmentation fault, added CheckIndex, did -max - used vscode
 2020/02/12, arjank, 20 min, fixed bug in reader and getIndex - used vsCode
+2020/02/13, arjank, 10 min, added deallocater, fixed bug in max, close file in vscode

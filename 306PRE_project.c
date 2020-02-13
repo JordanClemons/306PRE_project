@@ -15,6 +15,7 @@ void MinValue(char field[]);
 void mean(char field[]);
 int records(int index, char feild[], char*** csvInfo);
 int GetIndex(char field[], char*** csvInfo);
+void Deallocate(char*** csvInfo);
 
 int main(int argc, char*argv[]){
 	
@@ -33,6 +34,7 @@ int main(int argc, char*argv[]){
 		csvContents = ReadCSV(csvFile);	//READ CSV FILE BEFORE ANYTHING
 	}
 		
+	fclose(csvFile);
 	int isHeader = 0; // for -h, 0 == false, 1 == true
 	for(int x = 1; x < argc; x++){
 		if (strncmp("-f", argv[x], 2) == 0){
@@ -48,12 +50,9 @@ int main(int argc, char*argv[]){
 		
 		else if (strncmp("-max", argv[x], 4) == 0){
 			x++;
-			if (isHeader == 1){
-				if (MaxValue(GetIndex(argv[x], csvContents), csvContents) == 1){
-					return 1;
-				}
-			}else{
-				printf("Must use -h to use -max\n");
+			if (MaxValue(GetIndex(argv[x], csvContents), csvContents) == 1){
+				Deallocate(csvContents);
+				return 1;
 			}
 		}
 		
@@ -71,6 +70,7 @@ int main(int argc, char*argv[]){
 			x++;
 			if (isHeader == 1){
 			  if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
+					Deallocate(csvContents);
 					return 1;
 				}
 			}else{
@@ -79,6 +79,7 @@ int main(int argc, char*argv[]){
 		}
 	}
 
+	Deallocate(csvContents);
 	exit(0);
 }
 
@@ -124,7 +125,7 @@ char*** ReadCSV(FILE* csvFile){
 		}
 		
 		rows+=1;
-                ROWCOUNT+=1;
+        ROWCOUNT+=1;
                 
 	}
         
@@ -151,7 +152,7 @@ int MaxValue(int index, char*** csvInfo){
 		}
 
 		double max = DBL_MIN;
-		for (int i = 1; i < sizeof(csvInfo); i++){
+		for (int i = 1; i < ROWCOUNT; i++){
 			if (!isdigit(csvInfo[i][index][0])){
 				printf("Invalid field for '-max' function\n");
 				return 1;
@@ -205,3 +206,16 @@ int GetIndex(char field[], char*** csvInfo){
 	printf("Invalid field name: %s\n", field);
 	return -1;
 }
+
+void Deallocate(char*** csvInfo){
+	for (int i = 0; i < ROWCOUNT; i++){
+		for (int j = 0; j < sizeof(csvInfo); j++){
+			free(csvInfo[i][j]);
+		}
+
+		free(csvInfo[i]);
+	}
+
+	free(csvInfo);
+}
+

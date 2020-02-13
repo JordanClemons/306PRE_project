@@ -9,7 +9,7 @@ static int ROWCOUNT;
 char*** ReadCSV(FILE* csvFile);
 void f(char*** csvInfo);
 void r(char*** csvInfo);
-void h();
+void h(char*** csvInfo);
 int MaxValue(int index, char*** csvInfo);
 void MinValue(char field[]);
 void mean(char field[]);
@@ -43,7 +43,7 @@ int main(int argc, char*argv[]){
 		}
 		
 		else if (strncmp("-h", argv[x], 2) == 0){
-			h();
+			h(csvContents);
 		}
 		
 		else if (strncmp("-max", argv[x], 4) == 0){
@@ -139,8 +139,9 @@ void r(char*** csvInfo){
     printf("%i\n", ROWCOUNT);
 }
 
-void h(){
+void h(char*** csvInfo){
 		///TODO: Treat the first record of file as a header record rather than a data record
+  
 }
 
 int MaxValue(int index, char*** csvInfo){
@@ -178,17 +179,13 @@ int records(int index, char field[], char*** csvInfo){
 		///TODO: Display the records from file containing value in the the indicated field
                 ///Iterate through value until match
                 ///Display that row - iterate through and display all fields
-                for (int i = 0; i < sizeof(csvInfo); i++){
-		        if(index == csvInfo[0][i]){
-		                 for (int j = 1; j < sizeof(csvInfo); j++){
-		                         if(field == csvInfo[j][i]){
-					        for(int k = 0; k < sizeof(csvInfo); k++){
-			                               printf("%s, ", csvInfo[j][k]);
-		                         	}
-		                         }
-		                 }
-		       }
-                }
+	        for (int j = 1; j < sizeof(csvInfo); j++){
+		        if(field == csvInfo[j][index]){
+				 for(int k = 0; k < sizeof(csvInfo); k++){
+			                printf("%s, ", csvInfo[j][k]);
+		                 }   
+		        }
+	        }
 
 		return 0;
 }

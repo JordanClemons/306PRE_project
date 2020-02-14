@@ -93,7 +93,7 @@ int main(int argc, char*argv[]){
 			}
 		}
 
-        else if (!x == argc -1 ){
+        else if (x != (argc -1)) {
             printf("Unrecognized command: %s\n", argv[x]);
             exit(1);
         }

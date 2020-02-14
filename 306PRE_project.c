@@ -46,14 +46,10 @@ int main(int argc, char*argv[]){
 
         else if (strncmp("-records", argv[x], 8) == 0 && reccom == 0){
             x++;
-            if (isHeader == 1){
                 if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
                     Deallocate(csvContents);
                     return 1;
                 }
-            }else{
-                printf("Must use -h to use -records\n");
-            }
             reccom = 1;
         }
 
@@ -241,11 +237,16 @@ int records(int index, char field[], char*** csvInfo){
 		///TODO: Display the records from file containing value in the the indicated field
                 ///Iterate through value until match
                 ///Display that row - iterate through and display all fields
-	        for (int j = 1; j < sizeof(csvInfo); j++){
-		        if(field == csvInfo[j][index]){
-				 for(int k = 0; k < sizeof(csvInfo); k++){
-			                printf("%s, ", csvInfo[j][k]);
-		                 }   
+	        for (int j = 1; j < ROWCOUNT; j++){
+		  if(strcmp(field, csvInfo[j][index]) == 0){
+				 for(int k = 0; k < COLCOUNT; k++){
+				   if(k <  COLCOUNT-1){
+				   printf("%s, ", csvInfo[j][k]);
+				   }else{
+				     printf("%s\n", csvInfo[j][k]);
+				   }
+		                 }
+				 
 		        }
 	        }
 

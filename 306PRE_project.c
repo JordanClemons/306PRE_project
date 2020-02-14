@@ -81,7 +81,7 @@ int main(int argc, char*argv[]){
 			}
 		}
 		
-		else if (strncmp("-mean", argv[x], 5) == 0 && mean == 0){
+		else if (strncmp("-mean", argv[x], 5) == 0 && meancom == 0){
 		    meancom = 1;
 			x++;
 			if (mean(GetIndex(argv[x], csvContents), csvContents) == 1){

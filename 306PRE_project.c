@@ -36,12 +36,14 @@ int main(int argc, char*argv[]){
 		
 	fclose(csvFile);
 	int isHeader = 0; // for -h, 0 == false, 1 == true
+	int fcom = 0, reccom = 0 ,rcom = 0,hcom = 0,maxcom = 0,mincom = 0,meancom = 0;   //Used to prevent repeating commands. 0 if not used yet. 1 if used.
 	for(int x = 1; x < argc; x++){
-		if (strncmp("-f", argv[x], 2) == 0){
+		if (strncmp("-f", argv[x], 2) == 0 && fcom == 0){
 			f(csvContents);
+			fcom = 1;
 		}
 
-        else if (strncmp("-records", argv[x], 8) == 0){
+        else if (strncmp("-records", argv[x], 8) == 0 && reccom == 0){
             x++;
             if (isHeader == 1){
                 if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
@@ -51,17 +53,21 @@ int main(int argc, char*argv[]){
             }else{
                 printf("Must use -h to use -records\n");
             }
+            reccom = 1;
         }
 
-		else if (strncmp("-r", argv[x], 2) == 0){
+		else if (strncmp("-r", argv[x], 2) == 0 && rcom == 0){
 			r(csvContents);
+			rcom = 1;
 		}
 		
-		else if (strncmp("-h", argv[x], 2) == 0){
+		else if (strncmp("-h", argv[x], 2) == 0 && hcom == 0){
 			h(csvContents);
+			hcom = 1;
 		}
 		
-		else if (strncmp("-max", argv[x], 4) == 0){
+		else if (strncmp("-max", argv[x], 4) == 0 && maxcom == 0){
+		    maxcom = 1;
 			x++;
 			if (MaxValue(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);
@@ -69,7 +75,8 @@ int main(int argc, char*argv[]){
 			}
 		}
 		
-		else if (strncmp("-min", argv[x], 4) == 0){
+		else if (strncmp("-min", argv[x], 4) == 0 && mincom == 0){
+		    mincom = 1;
 			x++;
 			if (MinValue(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);
@@ -77,7 +84,8 @@ int main(int argc, char*argv[]){
 			}
 		}
 		
-		else if (strncmp("-mean", argv[x], 5) == 0){
+		else if (strncmp("-mean", argv[x], 5) == 0 && mean == 0){
+		    meancom = 1;
 			x++;
 			if (mean(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);

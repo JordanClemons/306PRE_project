@@ -36,7 +36,7 @@ int main(int argc, char*argv[]){
 
 	fclose(csvFile);
 	int isHeader = 0; // for -h, 0 == false, 1 == true
-	int fcom = 0, reccom = 0 ,rcom = 0,hcom = 0,maxcom = 0,mincom = 0,meancom = 0;   //Used to prevent repeating commands. 0 if not used yet. 1 if used.
+	int fcom = 0; int reccom = 0 ; int rcom = 0; int hcom = 0; int maxcom = 0; int mincom = 0; int meancom = 0;   //Used to prevent repeating commands. 0 if not used yet. 1 if used.
 	for(int x = 1; x < argc; x++){
 		if (strncmp("-f", argv[x], 2) == 0 && fcom == 0){
 			f(csvContents);
@@ -90,13 +90,13 @@ int main(int argc, char*argv[]){
 			if (mean(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);
 				exit(1);
-			}   
+			}
 		}
 
-		else{
-		    printf("Unrecognized command: %s\n", argv[x]);
-		    exit(1);
-		}
+        else if (!x == argc -1 ){
+            printf("Unrecognized command: %s\n", argv[x]);
+            exit(1);
+        }
 	
 
 	}

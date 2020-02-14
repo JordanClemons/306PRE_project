@@ -50,6 +50,7 @@ int main(int argc, char*argv[]){
                     Deallocate(csvContents);
                     return 1;
                 }
+		x++;
             reccom = 1;
         }
 
@@ -163,7 +164,7 @@ void r(char*** csvInfo){
 
 void h(char*** csvInfo){
 		///TODO: Treat the first record of file as a header record rather than a data record
-  
+                
 }
 
 int MaxValue(int index, char*** csvInfo){
@@ -239,8 +240,8 @@ int records(int index, char field[], char*** csvInfo){
                 ///Display that row - iterate through and display all fields
 	        for (int j = 1; j < ROWCOUNT; j++){
 		  if(strcmp(field, csvInfo[j][index]) == 0){
-				 for(int k = 0; k < COLCOUNT; k++){
-				   if(k <  COLCOUNT-1){
+				 for(int k = 0; k < COLCOUNT+1; k++){
+				   if(k <  COLCOUNT){
 				   printf("%s, ", csvInfo[j][k]);
 				   }else{
 				     printf("%s\n", csvInfo[j][k]);

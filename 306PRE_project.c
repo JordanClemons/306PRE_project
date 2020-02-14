@@ -33,7 +33,7 @@ int main(int argc, char*argv[]){
 	}else{
 		csvContents = ReadCSV(csvFile);	//READ CSV FILE BEFORE ANYTHING
 	}
-		
+
 	fclose(csvFile);
 	int isHeader = 0; // for -h, 0 == false, 1 == true
 	int fcom = 0, reccom = 0 ,rcom = 0,hcom = 0,maxcom = 0,mincom = 0,meancom = 0;   //Used to prevent repeating commands. 0 if not used yet. 1 if used.
@@ -90,7 +90,12 @@ int main(int argc, char*argv[]){
 			if (mean(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);
 				exit(1);
-			}
+			}   
+		}
+
+		else{
+		    printf("Unrecognized command: %s\n", argv[x]);
+		    exit(1);
 		}
 	
 

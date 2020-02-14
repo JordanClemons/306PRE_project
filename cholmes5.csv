@@ -3,3 +3,4 @@ DATE,UBIT,DURATION,ACTIVITY & TOOL DESCRIPTION
 2/7/20,cholmes5,15 minutes,Added additional comments to functions to help implementation
 2/11/20,cholmes5,2 hours,Created f() function and worked on r() function
 2/12/20,cholmes5,2 hours,Finalized f() and r() functions, helped debug ReadCSV, did some "cleaning" on functions
+2/14/20,cholmes5,20 minutes,Did some debugging on functions ReadCSV, f()

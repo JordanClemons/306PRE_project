@@ -5,6 +5,7 @@
 #include <float.h>
 
 static int ROWCOUNT;
+static int COLCOUNT;
 
 char*** ReadCSV(FILE* csvFile);
 void f(char*** csvInfo);
@@ -135,6 +136,7 @@ char*** ReadCSV(FILE* csvFile){
 					csvInfo[rows][cols][pos] = '\0';
 					pos = 0;
 					cols +=1;
+                                        COLCOUNT = cols;
 					csvInfo[rows][cols] = malloc(4096);
 				}else if(line[i] == '\0'){
 					csvInfo[rows][cols][pos - 1] = '\0'; // removes \n from end of csv file
@@ -143,6 +145,7 @@ char*** ReadCSV(FILE* csvFile){
 					csvInfo[rows][cols][pos] = line[i];
 					pos +=1;
 				}
+                       
 			}
 		}
 		
@@ -155,7 +158,7 @@ char*** ReadCSV(FILE* csvFile){
 }
 
 void f(char*** csvInfo){
-    printf("%lu\n", sizeof((csvInfo)));
+    printf("%i\n", COLCOUNT);
 }
 
 void r(char*** csvInfo){

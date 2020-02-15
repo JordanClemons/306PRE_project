@@ -111,7 +111,7 @@ char*** ReadCSV(FILE* csvFile){
 		csvInfo[rows][cols] = malloc(4096);
 		// isString is 0 when no quotes and 1 when quotes are read
 		int isString = 0;
-		for (int i = 0; i <= strlen(line); i++){
+		for (int i = 0; i < strlen(line); i++){
 			if (line[i] == '\"'){
 				isString = 1 - isString;
 				i +=1;

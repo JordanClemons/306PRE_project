@@ -31,7 +31,7 @@ int main(int argc, char*argv[]){
 	csvFile = fopen(argv[argc-1], "r");
 	if (csvFile == NULL){
 		printf("Error Opening File\n");
-		return 1;
+		exit(1);
 	}else{
 		csvContents = ReadCSV(csvFile);	//READ CSV FILE BEFORE ANYTHING
 	}
@@ -44,36 +44,31 @@ int main(int argc, char*argv[]){
 			f(csvContents);
 			fcom = 1;
 		}
-
         else if (strncmp("-records", argv[x], 8) == 0 && reccom == 0){
             x++;
                 if (records(GetIndex(argv[x], csvContents), argv[x+1], csvContents) == 1){
                     Deallocate(csvContents);
-                    return 1;
+                    exit(1);
                 }
 		x++;
             reccom = 1;
         }
-
 		else if (strncmp("-r", argv[x], 2) == 0 && rcom == 0){
 			r(csvContents);
 			rcom = 1;
 		}
-		
 		else if (strncmp("-h", argv[x], 2) == 0 && hcom == 0){
 			h();
 			hcom = 1;
 		}
-		
 		else if (strncmp("-max", argv[x], 4) == 0 && maxcom == 0){
 		    maxcom = 1;
 			x++;
 			if (MaxValue(GetIndex(argv[x], csvContents), csvContents) == 1){
 				Deallocate(csvContents);
-				return 1;
+				exit(1);
 			}
 		}
-		
 		else if (strncmp("-min", argv[x], 4) == 0 && mincom == 0){
 		    mincom = 1;
 			x++;
@@ -82,7 +77,6 @@ int main(int argc, char*argv[]){
 				exit(1);
 			}
 		}
-		
 		else if (strncmp("-mean", argv[x], 5) == 0 && meancom == 0){
 		    meancom = 1;
 			x++;
@@ -91,13 +85,11 @@ int main(int argc, char*argv[]){
 				exit(1);
 			}
 		}
-
         else if (x != (argc -1)) {
             printf("Unrecognized command: %s\n", argv[x]);
+			Deallocate(csvContents);
             exit(1);
         }
-	
-
 	}
 
 	Deallocate(csvContents);
@@ -168,94 +160,94 @@ void r(char*** csvInfo){
 }
 
 void h(char*** csvInfo){
-		///TODO: Treat the first record of file as a header record rather than a data record
+	// Treat the first record of file as a header record rather than a data record
     HSTATE = 1;
 }
 
 int MaxValue(int index, char*** csvInfo){
-		// Display the maximum value in the indicated field of the data records
-		if (index == -1){
+	// Display the maximum value in the indicated field of the data records
+	if (index == -1){
+		return 1;
+	}
+
+	double max = DBL_MIN;
+	for (int i = HSTATE; i < ROWCOUNT; i++){
+		if (!isdigit(csvInfo[i][index][0])){
+			printf("Invalid field for '-max' function\n");
 			return 1;
 		}
 
-		double max = DBL_MIN;
-		for (int i = 1; i < ROWCOUNT; i++){
-			if (!isdigit(csvInfo[i][index][0])){
-				printf("Invalid field for '-max' function\n");
-				return 1;
-			}
-
-			double temp = atof(csvInfo[i][index]);
-			if (temp > max){
-				max = temp;
-			}
+		double temp = atof(csvInfo[i][index]);
+		if (temp > max){
+			max = temp;
 		}
+	}
 
-		printf("Max: %f\n", max);
-		return 0;
+	printf("Max: %f\n", max);
+	return 0;
 }
 
 int MinValue(int index, char*** csvInfo){
-		// Display the minimum value in the indicated field of the data records
-		if (index == -1){
+	// Display the minimum value in the indicated field of the data records
+	if (index == -1){
+		return 1;
+	}
+
+	double min = DBL_MAX;
+	for (int i = HSTATE; i < ROWCOUNT; i++){
+		if (!isdigit(csvInfo[i][index][0])){
+			printf("Invalid field for '-min' function\n");
 			return 1;
 		}
 
-		double min = DBL_MAX;
-		for (int i = 1; i < ROWCOUNT; i++){
-			if (!isdigit(csvInfo[i][index][0])){
-				printf("Invalid field for '-min' function\n");
-				return 1;
-			}
-
-			double temp = atof(csvInfo[i][index]);
-			if (temp < min){
-				min = temp;
-			}
+		double temp = atof(csvInfo[i][index]);
+		if (temp < min){
+			min = temp;
 		}
+	}
 
-		printf("Min: %f\n", min);
-		return 0;
+	printf("Min: %f\n", min);
+	return 0;
 }
 
 int mean(int index, char*** csvInfo){
-		// Display the mean value in the indicated field of the data records
-		if (index == -1){
+	// Display the mean value in the indicated field of the data records
+	if (index == -1){
+		return 1;
+	}
+
+	double sum = 0;
+	for (int i = HSTATE; i < ROWCOUNT; i++){
+		if (!isdigit(csvInfo[i][index][0])){
+			printf("Invalid field for '-min' function\n");
 			return 1;
 		}
 
-		double sum = 0;
-		for (int i = 1; i < ROWCOUNT; i++){
-			if (!isdigit(csvInfo[i][index][0])){
-				printf("Invalid field for '-min' function\n");
-				return 1;
-			}
-
-			double temp = atof(csvInfo[i][index]);
-			sum = sum + temp;
-		}
-		double mean = sum / ROWCOUNT;
-		printf("Mean: %f\n", mean);
-		return 0;
+		double temp = atof(csvInfo[i][index]);
+		sum = sum + temp;
+	}
+	double mean = sum / (ROWCOUNT - HSTATE);
+	printf("Mean: %f\n", mean);
+	return 0;
 }
 
 int records(int index, char field[], char*** csvInfo){
-		///TODO: Display the records from file containing value in the the indicated field
-                ///Iterate through value until match
-                ///Display that row - iterate through and display all fields
-	        for (int j = HSTATE; j < ROWCOUNT; j++){
-		        if(strcmp(field, csvInfo[j][index]) == 0){
-			       for(int k = 0; k < COLCOUNT+1; k++){
-				      if(k <  COLCOUNT){
-				             printf("%s, ", csvInfo[j][k]);
-				      }else{
-				             printf("%s\n", csvInfo[j][k]);
-				      }
-		               }
-		        }
-	        }
+	//Display the records from file containing value in the the indicated field
+    //Iterate through value until match
+    //Display that row - iterate through and display all fields
+	for (int j = HSTATE; j < ROWCOUNT; j++){
+		if(strcmp(field, csvInfo[j][index]) == 0){
+			for(int k = 0; k < COLCOUNT+1; k++){
+				if(k <  COLCOUNT){
+					printf("%s, ", csvInfo[j][k]);
+				}else{
+					printf("%s\n", csvInfo[j][k]);
+				}
+			}
+		}
+	}
 
-		return 0;
+	return 0;
 }
 
 // Gets index from field
@@ -263,7 +255,7 @@ int GetIndex(char field[], char*** csvInfo){
 	if (isdigit(field[0])){
 		return atoi(field);
 	}else{
-		for (int i = 0; i < sizeof(csvInfo); i++){
+		for (int i = 0; i < COLCOUNT + 1; i++){
 			if (strcmp(field, csvInfo[0][i]) == 0){
 				return i;
 			}
@@ -276,7 +268,7 @@ int GetIndex(char field[], char*** csvInfo){
 
 void Deallocate(char*** csvInfo){
 	for (int i = 0; i < ROWCOUNT; i++){
-		for (int j = 0; j < sizeof(csvInfo); j++){
+		for (int j = 0; j < COLCOUNT + 1; j++){
 			free(csvInfo[i][j]);
 		}
 

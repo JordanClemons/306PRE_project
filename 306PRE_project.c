@@ -149,10 +149,6 @@ char*** ReadCSV(FILE* csvFile){
 
 void f(char*** csvInfo){
     printf("%i\n", COLCOUNT + 1);
-    for (int i = 0; i < COLCOUNT + 1; i++){
-        printf("%s ", csvInfo[0][i]);
-    }
-    putchar('\n');
 }
 
 void r(char*** csvInfo){
@@ -219,7 +215,7 @@ int mean(int index, char*** csvInfo){
 	double sum = 0;
 	for (int i = HSTATE; i < ROWCOUNT; i++){
 		if (!isdigit(csvInfo[i][index][0])){
-			printf("Invalid field for '-min' function\n");
+			printf("Invalid field for '-mean' function\n");
 			return 1;
 		}
 

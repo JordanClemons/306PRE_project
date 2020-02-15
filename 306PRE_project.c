@@ -156,7 +156,11 @@ char*** ReadCSV(FILE* csvFile){
 }
 
 void f(char*** csvInfo){
-    printf("%i\n", COLCOUNT+1);
+    printf("%i\n", COLCOUNT);
+    for (int i = 0; i < COLCOUNT; i++){
+        printf("%s ", csvInfo[0][i]);
+    }
+    putchar('\n');
 }
 
 void r(char*** csvInfo){

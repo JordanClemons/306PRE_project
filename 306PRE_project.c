@@ -37,7 +37,6 @@ int main(int argc, char*argv[]){
 	}
 
 	fclose(csvFile);
-	int isHeader = 0; // for -h, 0 == false, 1 == true
 	int fcom = 0; int reccom = 0 ; int rcom = 0; int hcom = 0; int maxcom = 0; int mincom = 0; int meancom = 0;   //Used to prevent repeating commands. 0 if not used yet. 1 if used.
 	for(int x = 1; x < argc; x++){
 		if (strncmp("-f", argv[x], 2) == 0 && fcom == 0){
@@ -50,7 +49,7 @@ int main(int argc, char*argv[]){
                     Deallocate(csvContents);
                     exit(1);
                 }
-		x++;
+			x++;
             reccom = 1;
         }
 		else if (strncmp("-r", argv[x], 2) == 0 && rcom == 0){
@@ -149,7 +148,7 @@ char*** ReadCSV(FILE* csvFile){
 
 void f(char*** csvInfo){
     printf("%i\n", COLCOUNT);
-    for (int i = 0; i < COLCOUNT; i++){
+    for (int i = 0; i < COLCOUNT + 1; i++){
         printf("%s ", csvInfo[0][i]);
     }
     putchar('\n');

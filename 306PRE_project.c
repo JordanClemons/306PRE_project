@@ -125,7 +125,7 @@ char*** ReadCSV(FILE* csvFile){
 					csvInfo[rows][cols][pos] = '\0';
 					pos = 0;
 					cols +=1;
-                                        COLCOUNT = cols;
+                    COLCOUNT = cols;
 					csvInfo[rows][cols] = malloc(4096);
 				}else if(line[i] == '\0'){
 					csvInfo[rows][cols][pos - 1] = '\0'; // removes \n from end of csv file

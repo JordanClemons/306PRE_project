@@ -159,7 +159,7 @@ void r(char*** csvInfo){
     printf("%i\n", ROWCOUNT);
 }
 
-void h(char*** csvInfo){
+void h(){
 	// Treat the first record of file as a header record rather than a data record
     HSTATE = 1;
 }

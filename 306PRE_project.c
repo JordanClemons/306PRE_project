@@ -130,6 +130,7 @@ char*** ReadCSV(FILE* csvFile){
 				}else if(line[i] == '\r'){
 					csvInfo[rows][cols][pos] = '\0'; // removes \n from end of csv file
 					pos = 0;
+					i++;
 				}else{
 					csvInfo[rows][cols][pos] = line[i];
 					pos +=1;

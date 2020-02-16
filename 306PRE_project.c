@@ -152,7 +152,7 @@ void f(char*** csvInfo){
 }
 
 void r(char*** csvInfo){
-    printf("%i\n", ROWCOUNT);
+    printf("%i\n", ROWCOUNT - HSTATE);
 }
 
 void h(){

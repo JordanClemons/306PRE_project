@@ -1,0 +1,11 @@
+DATE,UBIT,DURATION,ACTIVITY & TOOL DESCRIPTION
+2/3/2020,jaclemon,60 minutes,Setting up Github repo for project
+2/4/2020,jaclemon,60 minutes,Wrote function to read command line arguments using notepad++
+2/5/2020,jaclemon,30 minutes,Used notepad++ to fix exit status and deleted branch and added all changes to master with github
+2/9/2020,jaclemon,30 minutes,Used notepad++ to try and diagnose segmentation fault error with csvreader
+2/13/2020jaclemon,,30 minutes,"Used notepad++ to implement -min, -mean functions"
+2/13/2020jaclemon,,20 minutes,Used Clion to fix command line issue where -records would read as -r
+2/13/2020jaclemon,,15 minutes,Used Clion to prevent from repeated command lines from having an affect
+2/13/2020jaclemon,,15 minutes,Used Clion to recognize illegal command line args
+2/13/2020jaclemon,,45 minutes,Used Clion to diagnose illegal command error
+2/16/2020jaclemon,,5 minutes,Used Excel to convert log to csv file
